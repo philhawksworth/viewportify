@@ -1,0 +1,58 @@
+<!doctype html<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Viewportify : Create</title>
+    <link rel="stylesheet" href="style.css" media="screen" title="no title" charset="utf-8">
+  </head>
+   <body>
+     <form id="data" action="." onsubmit="return viewportify.formatData();" method="post">
+       <textarea name="csv" id="csv" rows="8" cols="40">
+320x568
+768x1024
+320x480
+360x592
+360x640
+384x592
+1280x752
+320x534
+540x960
+720x1280
+1280x800
+1920x1080
+2560x1440
+320x533
+343x571
+364x606
+480x800
+598x360
+600x912
+1080x1920
+1366x2304
+1600x900
+314x220
+384x604
+600x917
+601x906
+720x1184
+768x1184
+800x438
+       </textarea>
+       <input type="text" name="url" id="url" value="alongdomainnamegoeshere.com">
+       <input type="text" name="colour" id="colour" value="#8888cc">
+       <input type="text" name="bgcolour" id="bgcolour" value="#000000">
+
+     </form>
+      <canvas id="canvas" width="200" height="100"></canvas>
+      <img src="" id="thumb" alt="" />
+
+      <div class="savestep">
+        <input type="submit" name="submit" value="Add my image to the gallery and give me a page with a BIG vesion">
+      </div>
+
+
+
+      <script src="ocanvas-2.7.3.min.js" charset="utf-8"></script>
+      <script src="viewportify.js" charset="utf-8"></script>
+   </body>
+</html>
