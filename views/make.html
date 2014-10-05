@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+
+{% block header %}
+<div class="header">
+  <div class="container">
+    <h1><a href="/" >viewportify</a></h1>
+    <p class="strapline">The web is viewed in all shapes and sizes.</p>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="dark">
+<form id="data" class="datagather" action="." onsubmit="vp.generateFromForm(); return false;" method="post">
+  <div class="controls">
+    <label for="csv">Screen resolutions</label>
+      <textarea name="csv" id="csv" rows="10" cols="20">
+320x568
+768x1024
+320x480
+360x592
+360x640
+384x592
+1280x752
+320x534
+540x960
+720x1280
+1280x800
+1920x1080
+2560x1440
+320x533
+343x571
+364x606
+480x800
+598x360
+600x912
+1080x1920
+1366x2304
+1600x900
+314x220
+384x604
+600x917
+601x906
+720x1184
+768x1184
+800x438
+    </textarea>
+  </div>
+  <div class="controls">
+    <label for="url">Site URL</label><input type="text" name="url" id="url" value="alongdomainnamegoeshere.com">
+    <label for="colour">Colour</label><input type="text" name="colour" id="colour" value="#8888cc">
+    <input type="submit" class="button submit" name="submit" value="Make my viewport visualisation">
+  </div>
+</form>
+</div>
+
+ <div class="canvasContainer">
+   <canvas id="canvas" width="200" height="100"></canvas>
+ </div>
+ <img src="" id="output" class="thumb" />
+
+ <div id="savestep" class="savestep">
+   <form id="saver" action="/make" onsubmit="vp.setPayload();" enctype="multipart/form-data" method="post">
+     <input type="hidden" name="data" id="graphData" value="">
+     <input type="hidden" name="thumbnail" id="thumbnail" value="">
+     <input type="submit" name="submit" value="Add my image to the gallery and give me a page with a BIG vesion">
+   </form>
+ </div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/assets/ocanvas-2.7.3.min.js" charset="utf-8"></script>
+<script src="/assets/original.js" charset="utf-8"></script>
+{% endblock %}

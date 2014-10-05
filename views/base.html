@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+	<title>Vieportify</title>
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+{% block header %}{% endblock %}
+
+{% block content %}{% endblock %}
+
+<div class="footer">
+	<div class="container">
+	Made on a whim by <a href="http://twitter.com/philhawksworth">@philhawksworth</a>
+	</div>
+</div>
+  {% block scripts %}{% endblock %}
+{% block data %}{% endblock %}
+</body>
+</html>

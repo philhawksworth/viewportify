@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+
+
+{% block header %}
+<div class="intro">
+  <div class="container">
+    <h1>viewportify</h1>
+    <p class="strapline">The web is viewed in all shapes and sizes.</p>
+    <p>
+      <a href="/make" >Make another</a> | <a href="/" >See the latest</a>
+    </p>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<canvas id="canvas" width="200" height="100"></canvas>
+<img src="" id="output" class="graph" />
+{% endblock %}
+
+{% block data %}
+<script type="text/javascript" >
+  var pageData = JSON.parse('{% autoescape false %}{{ data }}{% endautoescape %}');
+  vp.generateFromDataInPage()
+</script>
+{% endblock %}
+
+{% block scripts %}
+<script src="/assets/ocanvas-2.7.3.min.js" charset="utf-8"></script>
+<script src="/assets/original.js" charset="utf-8"></script>
+
+{% endblock %}
