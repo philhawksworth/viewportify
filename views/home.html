@@ -16,8 +16,8 @@
 
 {% block content %}
 <div class="gallery">
-  {% for image in thumbs %}
-  <a href="/graph/{{ image|replace('.png','') }}"><img src="/graphs/{{ image }}" alt="" /></a>
+  {% for graph in graphs %}
+  <a href="/graph/{{ graph | replace('.png', '') }}"><img src="https://s3.amazonaws.com/{{ bucket }}/{{ graph }}.png" alt="" /></a>
   {% endfor %}
 </div>
 {% endblock %}

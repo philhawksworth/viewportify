@@ -3,4 +3,4 @@ tryout
 datastore.json
 .DS_Store
 graphs/*
-tryout
+.env
