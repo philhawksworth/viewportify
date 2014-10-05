@@ -1,6 +1,5 @@
 var Hapi = require("hapi");
 var Path = require('path');
-var formidable = require('formidable');
 var Datastore = require('nedb');
 var fs = require('fs');
 
