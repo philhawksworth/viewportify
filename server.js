@@ -7,7 +7,7 @@ var db = new Datastore({filename: 'datastore.json', autoload: true });
 
 var graphs = [];
 
-var server = new Hapi.Server((process.env.PORT || 5000), "localhost", {
+var server = new Hapi.Server((process.env.PORT || 5000), {
   views: {
     engines: {
       html: require('swig')
