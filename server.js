@@ -105,7 +105,7 @@ server.route({
         Key: newDoc._id + ".png",
         Body: base64data,
         ContentType: "image/png",
-        Expires: 'Sun, 17-Jan-2038 19:00:00 GMT'
+        Expires: 153792000 // 5 years
       };
       s3bucket.putObject(data, function(err, data) {
         if (err) {
@@ -114,8 +114,6 @@ server.route({
           console.log("Successfully uploaded data to myBucket/myKey");
         }
       });
-
-      // graphs.push("http://" + bucket + "/" + newDoc._id + ".png");
 
       // update the list of all known graphs
       refreshList();
