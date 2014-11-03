@@ -1,6 +1,5 @@
 var Hapi = require("hapi");
 var Path = require('path');
-var Datastore = require('nedb');
 var fs = require('fs');
 var AWS = require('aws-sdk');
 var mongo = require('mongodb');
