@@ -15,6 +15,5 @@
     "mongodb": "~1.4.19",
     "mongoose": "~3.8.18",
     "short-mongo-id": "~0.1.1",
-    "clone": "~0.1.18"
   }
 }
