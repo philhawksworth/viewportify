@@ -20,15 +20,12 @@ var vp = {
     vp.generateViewports(data);
     vp.addText(data);
 
-console.log("vp.canvas", vp.canvas);
+    // console.log("vp.canvas", vp.canvas);
 
     var imgsrc = vp.canvas.toDataURL("image/png");
-    // var img = document.querySelector("#thumb");
-    // img.src= imgsrc;
-
-
     return false;
   },
+
 
   formatData : function () {
 
@@ -57,8 +54,8 @@ console.log("vp.canvas", vp.canvas);
       });
 
       // determine the canvas size needed
-      var x = parseInt(dimensions[1]);
-      var y = parseInt(dimensions[0]);
+      var x = parseInt(dimensions[1], 10);
+      var y = parseInt(dimensions[0], 10);
       if(x > data.width) {
          data.width = x;
       }

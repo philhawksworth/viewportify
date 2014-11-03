@@ -3,19 +3,30 @@ var Path = require('path');
 var Datastore = require('nedb');
 var fs = require('fs');
 var AWS = require('aws-sdk');
+var mongo = require('mongodb');
+var mongoose = require('mongoose');
+var shortId = require('short-mongo-id');
 
+var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost/testdb';
+mongoose.connect(mongoUri);
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'mongo db connection error:'));
+db.once('open', function callback () {
+  console.log("mongo db connected.");
+});
+
+var graphSchema = mongoose.Schema({
+    id: String,
+    url: String,
+    data: String
+});
+var Graph = mongoose.model('Graph', graphSchema);
+
+// configure access to S3
 var bucket = 'graphs.viewports.hawksworx.com';
 AWS.config.update({ accessKeyId:  process.env.S3KEYID, secretAccessKey: process.env.S3SECRET });
 
-
-var db = new Datastore({filename: 'datastore.json', autoload: true });
-
-
-// stash the list of graph images rathe than require a db listing each request
-var graphs = [];
-
-refreshList();
-
+// configure the server
 var server = new Hapi.Server((process.env.PORT || 5000), {
   views: {
     engines: {
@@ -24,6 +35,7 @@ var server = new Hapi.Server((process.env.PORT || 5000), {
     path: './views'
   }
 });
+
 
 // update the listing of files
 fs.readdir("./graphs", function(err, files){
@@ -36,10 +48,13 @@ server.route({
   path: "/",
   method: "GET",
   handler: function(request, response) {
-    // array of thumbnail file names in the graphs directory
-    response.view("home", { graphs : graphs, bucket : bucket});
+    Graph.find(function (err, graphs) {
+      if (err) return console.error(err);
+      response.view("home", { graphs : graphs, bucket : bucket});
+    });
   }
 });
+
 
 // route requests for the creation form page
 server.route({
@@ -56,9 +71,11 @@ server.route({
   path: "/graph/{id}",
   method: "GET",
   handler: function(request, response) {
-    // get the graph data from the db and return it in the page
-    db.findOne({"_id": request.params.id}).exec(function (err, docs) {
-      response.view("graph", { data : docs.data });
+    Graph.find({ id: request.params.id }, function(err, graph){
+      if(err) {
+        console.error(error);
+      }
+      response.view("graph", { graph : graph[0], bucket: bucket });
     });
   }
 });
@@ -76,7 +93,7 @@ server.route({
 });
 
 
-// route requests for the cms site assets.
+// route requests for the site assets.
 server.route({
   method: 'GET',
   path: '/assets/{param*}',
@@ -94,15 +111,19 @@ server.route({
   path: "/make",
   method: "POST",
   handler: function(request, response) {
-
-    // Add the data to the database then redirect the user to the render page for the graph
-    db.insert({ data : request.payload.data } , function (err, newDoc) {
+    
+    var graph = new Graph({ id: 'the-id', url: "the url", data: request.payload.data });
+    graph.id = shortId(graph._id); // give it a url freindly short id;
+   
+    // Add the data to the database,
+    // upload a thumbnail to S3
+    // redirect the user to the render page for the graph 
+    graph.save(function(err, graph){
       var imgData = request.payload.thumbnail.replace(/^data:image\/png;base64,/, "");
       var base64data = new Buffer(imgData, 'base64');
-
       var s3bucket = new AWS.S3({params: {Bucket: bucket}});
       var data = {
-        Key: newDoc._id + ".png",
+        Key: graph.id + ".png",
         Body: base64data,
         ContentType: "image/png",
         Expires: 153792000 // 5 years
@@ -114,24 +135,11 @@ server.route({
           console.log("Successfully uploaded data to myBucket/myKey");
         }
       });
-
-      // update the list of all known graphs
-      refreshList();
-
-      response.redirect('/graph/'+ newDoc._id);
+      response.redirect('/graph/'+ graph.id);
     });
 
   }
 });
-
-
-function refreshList(){
-  db.find({}).exec(function (err, docs) {
-    for (var i = 0; i < docs.length; i++) {
-      graphs.push(docs[i]._id);
-    }
-  });
-}
 
 // start the server
 server.start(function() {

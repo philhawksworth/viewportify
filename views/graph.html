@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 
-
+{% block meta %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@philhawksworth">
+<meta name="twitter:creator" content="@philhawksworth">
+<meta name="twitter:title" content="Browser sizes used to view {{ graph.url }}.">
+<meta name="twitter:description" content="The web is viewed in all shapes and sizes. This graphic shows the most common viewport sizes used on {{ graph.url }} according to analytics data. Generate your own with Vieportify.">
+<meta name="twitter:image:src" content="https://s3.amazonaws.com/{{ bucket }}/{{ graph.id }}.png">
+{% endblock %}
 
 {% block header %}
 <div class="intro">
@@ -22,7 +29,7 @@
 
 {% block data %}
 <script type="text/javascript" >
-  var pageData = JSON.parse('{% autoescape false %}{{ data }}{% endautoescape %}');
+  var pageData = JSON.parse('{% autoescape false %}{{ graph.data }}{% endautoescape %}');
   vp.generateFromDataInPage()
 </script>
 {% endblock %}

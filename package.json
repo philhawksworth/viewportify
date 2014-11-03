@@ -11,7 +11,10 @@
   "dependencies": {
     "hapi": "~6.11.0",
     "swig": "~1.4.2",
-    "nedb": "~0.11.1",
-    "aws-sdk": "~2.0.18"
+    "aws-sdk": "~2.0.18",
+    "mongodb": "~1.4.19",
+    "mongoose": "~3.8.18",
+    "short-mongo-id": "~0.1.1",
+    "clone": "~0.1.18"
   }
 }

@@ -5,15 +5,20 @@ var vp = {
   padding : 100,
   imgsrc : null,
 
+  // full page view grabbing data from the object in the page
   generateFromDataInPage : function () {
-    vp.data = pageData;
-    vp.constructGraph();
+    var data = pageData;
+    vp.constructGraph(data, false);
   },
 
+
+  // preview graph grabbing data from the form
   generateFromForm : function () {
     vp.data = vp.makeData();
-    vp.constructGraph();
+    var data = vp.scale(vp.data);
+    vp.constructGraph(data, true);
   },
+
 
   // gather data from the form and stash it in an object
   makeData : function () {
@@ -29,7 +34,6 @@ var vp = {
 
      data.colour = vp.hexToRgb(document.querySelector('#colour').value);
      data.bgcolour = "#ffffff";
-    //  data.bgcolour = document.querySelector('#bgcolour').value;
      data.name = document.getElementById('url').value;
 
      var lines = document.querySelector('#csv').value.trim().split('\n');
@@ -44,8 +48,8 @@ var vp = {
        });
 
        // determine the canvas size needed
-       var x = parseInt(dimensions[1]);
-       var y = parseInt(dimensions[0]);
+       var x = parseInt(dimensions[1], 10);
+       var y = parseInt(dimensions[0], 10);
        if(x > data.width) {
           data.width = x;
        }
@@ -62,57 +66,63 @@ var vp = {
  },
 
 
-  constructGraph : function () {
+  constructGraph : function (data, thumbnail) {
 
     // Create the canvas at the right size for the content
     var c = document.querySelector("#canvas");
-    c.width = vp.data.width;
-    c.height = vp.data.height;
+    c.width = data.width;
+    c.height = data.height;
     vp.canvas = oCanvas.create({
       canvas: "#canvas",
-      background: vp.data.bgcolour
+      background: data.bgcolour
     });
 
     vp.canvas.draw.clear();
-    vp.generateViewports();
-    vp.addText(vp.data.name);
+    vp.generateViewports(data , thumbnail);
+
+    // don't add the text label to the thumbnail
+    console.log("thumbnail? ", thumbnail);
+    if(!thumbnail){
+      vp.addText(data.name, data.colour, data.bgcolour);
+    }
 
     // generate an image
     var imgsrc = c.toDataURL("image/png");
     var img = document.querySelector("#output");
     img.src = vp.imgsrc = imgsrc;
 
-    document.querySelector("#savestep").style.display = "block";
+    var savestep = document.querySelector("#savestep");
+    if(savestep) {
+      savestep.style.display = "block";
+    }
 
   },
 
 
-  generateViewports : function () {
-    for (var i = 0; i < vp.data.viewports.length; i++) {
-      vp.drawViewport(vp.data.viewports[i].w, vp.data.viewports[i].h);
+  generateViewports : function (data, thumbnail) {
+    for (var i = 0; i < data.viewports.length; i++) {
+      vp.drawViewport(data.viewports[i].w, data.viewports[i].h, data.colour, thumbnail);
     }
   },
 
 
-  drawViewport : function (width, height) {
-
+  drawViewport : function (width, height, col, thumbnail) {
+    
     var c = vp.canvas;
-    var col = vp.data.colour;
     var block = c.display.rectangle({
       x: ((c.width - width) / 2),
       y: ((c.height - height) / 2),
       width: width,
       height: height,
       fill: "rgba("+ col.r +", "+ col.g +", "+ col.b +", 0.1)",
-      stroke: "inside 1px rgba("+ col.r +", "+ col.g +", "+ col.b +", 0.7)"
+      stroke: thumbnail ? "" : "inside 1px rgba("+ col.r +", "+ col.g +", "+ col.b +", 0.7)"
     });
     c.addChild(block);
   },
 
 
-  addText : function (str) {
+  addText : function (str, col, bgcolour) {
     var c = vp.canvas;
-    var col = vp.data.colour;
     var shadow = c.display.text({
       x: (c.width / 2) + 1,
       y: (c.height / 2) + 1,
@@ -128,7 +138,7 @@ var vp = {
       origin: { x: "center", y: "center" },
       font: "bold 90px sans-serif",
       text: str,
-      fill: vp.data.bgcolour,
+      fill: bgcolour,
     });
     c.addChild(text);
   },
@@ -144,41 +154,81 @@ var vp = {
     return rgb;
   },
 
+
   setPayload : function () {
+    console.log("Payload", vp.data );
     document.querySelector('#graphData').value = JSON.stringify(vp.data);
-    document.querySelector('#thumbnail').value = vp.makeThumbnail();
+    document.querySelector('#thumbnail').value = vp.imgsrc;
     return true;
   },
 
-  makeThumbnail : function () {
 
-    return vp.imgsrc;
-
-    // var canvas = document.querySelector("#canvas");
-    // var context = canvas.getContext('2d');
-
-//     var resizer = document.querySelector("#resizer");
-//     resizer.width = img.width;
-//     resizer.height = img.height;
-//
-// console.log("src", img.src);
-//
-//     var canvas = oCanvas.create({
-//       canvas: "#resizer",
-//     });
-//
-//     var image = canvas.display.image({
-//     	x: 0,
-//     	y: 0,
-//     	// origin: { x: "center", y: "center" },
-//     	image: vp.imgsrc,
-//       height: resizer.height,
-//       width: resizer.width
-//     });
-//     canvas.addChild(image);
+  // scale to the data values for a smaller thumbnail to be generated
+  scale : function(data) {
+    var scaledData = vp.clone(data);
+    var ratio = 0.1;
+    scaledData.height = parseInt(data.height * ratio, 10);
+    scaledData.width = parseInt(data.width * ratio, 10);
+    for (var i = scaledData.viewports.length - 1; i >= 0; i--) {
+      scaledData.viewports[i].h = parseInt(data.viewports[i].h * ratio, 10);
+      scaledData.viewports[i].w = parseInt(data.viewports[i].w * ratio, 10);
+    }
+    // console.log(r);
+    // var maxwidth = vp.data.width / r;
+    // console.log(maxwidth);
+    return scaledData;
+  },
 
 
-    // return context.getImageData(0,0,canvas.width, canvas.height);
+
+  clone : function (src) {
+    function mixin(dest, source, copyFunc) {
+      var name, s, i, empty = {};
+      for(name in source){
+        // the (!(name in empty) || empty[name] !== s) condition avoids copying properties in "source"
+        // inherited from Object.prototype.  For example, if dest has a custom toString() method,
+        // don't overwrite it with the toString() method that source inherited from Object.prototype
+        s = source[name];
+        if(!(name in dest) || (dest[name] !== s && (!(name in empty) || empty[name] !== s))){
+          dest[name] = copyFunc ? copyFunc(s) : s;
+        }
+      }
+      return dest;
+    } 
+    if(!src || typeof src != "object" || Object.prototype.toString.call(src) === "[object Function]"){
+      // null, undefined, any non-object, or function
+      return src; // anything
+    }
+    if(src.nodeType && "cloneNode" in src){
+      // DOM Node
+      return src.cloneNode(true); // Node
+    }
+    if(src instanceof Date){
+      // Date
+      return new Date(src.getTime()); // Date
+    }
+    if(src instanceof RegExp){
+      // RegExp
+      return new RegExp(src);   // RegExp
+    }
+    var r, i, l;
+    if(src instanceof Array){
+      // array
+      r = [];
+      for(i = 0, l = src.length; i < l; ++i){
+        if(i in src){
+          r.push(vp.clone(src[i]));
+        }
+      }
+      // we don't clone functions for performance reasons
+      //    }else if(d.isFunction(src)){
+      //      // function
+      //      r = function(){ return src.apply(this, arguments); };
+    }else{
+      // generic objects
+      r = src.constructor ? new src.constructor() : {};
+    }
+    return mixin(r, src, vp.clone);
   }
 
 

@@ -17,7 +17,12 @@
 {% block content %}
 <div class="gallery">
   {% for graph in graphs %}
-  <a href="/graph/{{ graph | replace('.png', '') }}"><img src="https://s3.amazonaws.com/{{ bucket }}/{{ graph }}.png" alt="" /></a>
+  <div class="thumbnail">
+  <a href="/graph/{{ graph.id }}">
+    <img src="https://s3.amazonaws.com/{{ bucket }}/{{ graph.id }}.png" alt="" />
+    <span>{{ graph.url }}</span>
+  </a>
+  </div>
   {% endfor %}
 </div>
 {% endblock %}
