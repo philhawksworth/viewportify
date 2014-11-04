@@ -7,7 +7,7 @@ var vp = {
 
   // full page view grabbing data from the object in the page
   generateFromDataInPage : function () {
-    var data = pageData;
+    var data = vp.scale(pageData, 0.5);
     vp.constructGraph(data, false);
   },
 
@@ -15,7 +15,7 @@ var vp = {
   // preview graph grabbing data from the form
   generateFromForm : function () {
     vp.data = vp.makeData();
-    var data = vp.scale(vp.data);
+    var data = vp.scale(vp.data, 0.1);
     vp.constructGraph(data, true);
   },
 
@@ -87,7 +87,11 @@ var vp = {
     }
 
     // generate an image
-    var imgsrc = c.toDataURL("image/png");
+    var imgsrc = c.toDataURL("image/jpeg");
+    console.log("data size:", imgsrc.length);
+    imgsrc = c.toDataURL("image/jpeg", 0.5  );
+    console.log("data size:", imgsrc.length);
+
     var img = document.querySelector("#output");
     img.src = vp.imgsrc = imgsrc;
 
@@ -107,7 +111,6 @@ var vp = {
 
 
   drawViewport : function (width, height, col, thumbnail) {
-    
     var c = vp.canvas;
     var block = c.display.rectangle({
       x: ((c.width - width) / 2),
@@ -127,7 +130,7 @@ var vp = {
       x: (c.width / 2) + 1,
       y: (c.height / 2) + 1,
       origin: { x: "center", y: "center" },
-      font: "bold 90px sans-serif",
+      font: "bold 60px sans-serif",
       text: str,
       fill: "rgba("+ col.r +", "+ col.g +", "+ col.b +", 1)"
     });
@@ -136,7 +139,7 @@ var vp = {
       x: c.width / 2,
       y: c.height / 2,
       origin: { x: "center", y: "center" },
-      font: "bold 90px sans-serif",
+      font: "bold 60px sans-serif",
       text: str,
       fill: bgcolour,
     });
@@ -164,9 +167,13 @@ var vp = {
 
 
   // scale to the data values for a smaller thumbnail to be generated
-  scale : function(data) {
+  scale : function(data, scale) {
     var scaledData = vp.clone(data);
-    var ratio = 0.1;
+
+    // calc ratio to give height of 160
+    // var r = data.height / 160;
+
+    var ratio = scale;
     scaledData.height = parseInt(data.height * ratio, 10);
     scaledData.width = parseInt(data.width * ratio, 10);
     for (var i = scaledData.viewports.length - 1; i >= 0; i--) {
