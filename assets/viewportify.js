@@ -2,7 +2,7 @@ var vp = {
 
   canvas : null,
   data : {},
-  padding : 100,
+  padding : 300,
   imgsrc : null,
 
   // full page view grabbing data from the object in the page
