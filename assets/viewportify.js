@@ -87,10 +87,7 @@ var vp = {
     }
 
     // generate an image
-    var imgsrc = c.toDataURL("image/jpeg");
-    console.log("data size:", imgsrc.length);
-    imgsrc = c.toDataURL("image/jpeg", 0.5  );
-    console.log("data size:", imgsrc.length);
+    var imgsrc = c.toDataURL("image/png");
 
     var img = document.querySelector("#output");
     img.src = vp.imgsrc = imgsrc;
@@ -162,6 +159,9 @@ var vp = {
     console.log("Payload", vp.data );
     document.querySelector('#graphData').value = JSON.stringify(vp.data);
     document.querySelector('#thumbnail').value = vp.imgsrc;
+
+console.log(document.querySelector('#thumbnail').value);
+
     return true;
   },
 
