@@ -110,8 +110,8 @@ server.route({
   path: "/make",
   method: "POST",
   handler: function(request, response) {
-    
-    var graph = new Graph({ id: 'the-id', url: "the url", data: request.payload.data });
+
+    var graph = new Graph({ id: 'the-id', url: JSON.parse(request.payload.data).name, data: request.payload.data });
     graph.id = shortId(graph._id); // give it a url freindly short id;
    
     // Add the data to the database,

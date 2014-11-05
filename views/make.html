@@ -62,16 +62,16 @@
    <canvas id="canvas" width="200" height="100"></canvas>
  </div>
  <div id="savestep" class="savestep">
+   <p>preview</p>
+ </div>
+ <img src="" id="output" class="thumb" />
+ <div id="savestep" class="savestep">
    <form id="saver" action="/make" onsubmit="vp.setPayload();" enctype="multipart/form-data" method="post">
      <input type="hidden" name="data" id="graphData" value="">
      <input type="hidden" name="thumbnail" id="thumbnail" value="">
      <input type="submit" name="submit" class="button" value="I like it! Add this image to the gallery and give me a page with a BIG vesion">
    </form>
-   <p>preview</p>
  </div>
-
- <img src="" id="output" class="thumb" />
-
 
 
 {% endblock %}

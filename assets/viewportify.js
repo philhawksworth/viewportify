@@ -17,6 +17,11 @@ var vp = {
     vp.data = vp.makeData();
     var data = vp.scale(vp.data, 0.1);
     vp.constructGraph(data, true);
+    var savestep = document.querySelectorAll(".savestep");
+    if(savestep.length) {
+      savestep[0].style.display = "block";
+      savestep[1].style.display = "block";
+    }
   },
 
 
@@ -92,11 +97,6 @@ var vp = {
     var img = document.querySelector("#output");
     img.src = vp.imgsrc = imgsrc;
 
-    var savestep = document.querySelector("#savestep");
-    if(savestep) {
-      savestep.style.display = "block";
-    }
-
   },
 
 
@@ -159,9 +159,6 @@ var vp = {
     console.log("Payload", vp.data );
     document.querySelector('#graphData').value = JSON.stringify(vp.data);
     document.querySelector('#thumbnail').value = vp.imgsrc;
-
-console.log(document.querySelector('#thumbnail').value);
-
     return true;
   },
 
