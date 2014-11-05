@@ -53,8 +53,8 @@ var vp = {
        });
 
        // determine the canvas size needed
-       var x = parseInt(dimensions[1], 10);
-       var y = parseInt(dimensions[0], 10);
+       var x = parseInt(dimensions[0], 10);
+       var y = parseInt(dimensions[1], 10);
        if(x > data.width) {
           data.width = x;
        }
@@ -77,6 +77,10 @@ var vp = {
     var c = document.querySelector("#canvas");
     c.width = data.width;
     c.height = data.height;
+
+
+    console.log("big width: ", c.width);
+
     vp.canvas = oCanvas.create({
       canvas: "#canvas",
       background: data.bgcolour
@@ -169,10 +173,11 @@ var vp = {
     var scaledData = vp.clone(data);
 
     // calc ratio to give a max height
-    var r = data.height / maxheight;
+    var r = data.height / maxheight;  
 
     scaledData.height = parseInt(data.height / r, 10);
     scaledData.width = parseInt(data.width / r, 10);
+
     if(scaledData.width < 400){
       scaledData.width = 400;
     }
