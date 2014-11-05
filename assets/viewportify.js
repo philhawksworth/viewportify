@@ -48,8 +48,8 @@ var vp = {
        // populate the viewports objects array
        var dimensions = lines[i].split('x');
        data.viewports.push({
-         w : dimensions[1],
-         h : dimensions[0],
+         w : dimensions[0],
+         h : dimensions[1],
        });
 
        // determine the canvas size needed
