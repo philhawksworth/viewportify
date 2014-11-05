@@ -177,11 +177,19 @@ input[type='text'] {
   margin-bottom:1em;
   width: 100%;
 }
-label {
+textarea {
+  margin-bottom: 0;
+}
+label,
+.help {
   display: block;
   font-size:0.8em;
   font-style: italic;
   color:#999;
+}
+.help {
+  margin: 0.2em;
+  padding: 0;
 }
 
 
@@ -194,8 +202,14 @@ label {
   margin:2em;
 }
 
+.canvasContainer{
+  margin:0;
+  padding:0;
+}
 #canvas {
   display:none;
+  margin:0;
+  padding:0;
 }
 
 .savestep {
@@ -206,7 +220,7 @@ label {
   margin: 30px 0;
 }
 .gallery img {
-  width:200px;
+  width:280px;
   margin:0;
   padding:0;
   vertical-align:middle;
@@ -216,7 +230,8 @@ label {
   padding:0;
 }
 .gallery span {
-display: block;
+  display: block;
+  margin-top: 0.6em;
 }
 .gallery .thumbnail {
   display: inline-block;

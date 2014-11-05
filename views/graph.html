@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block meta %}
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@philhawksworth">
 <!-- <meta name="twitter:creator" content="@philhawksworth"> -->
 <meta name="twitter:title" content="Browser sizes used to view {{ graph.url }}.">
@@ -12,13 +12,14 @@
 
 
 
+
 {% block header %}
 <div class="header">
   <div class="container">
     <h1><a href="/" >viewportify</a></h1>
     <p class="strapline">The web is viewed in all shapes and sizes.</p>
     <p>
-      <a href="/make" >Make another</a> | <a href="/" >See the gallery</a> | <a href="https://twitter.com/intent/tweet?text=A%20graph%20of%20the%20browser%20viewports%20used%20to%20access%20my%20site%3A%20&url=http%3A%2F%2Fviewportify.hawksworx.com%2Fgraph%2F{{ graph.id }}&hashtags=RWD">Tweet this</a>
+      <a href="/make" >Create a graph</a> | <a href="/" >Gallery</a> | <a href="https://twitter.com/intent/tweet?text=A%20graph%20of%20the%20browser%20viewports%20used%20to%20access%20my%20site%3A%20&url=http%3A%2F%2Fviewportify.hawksworx.com%2Fgraph%2F{{ graph.id }}&hashtags=RWD">Tweet this</a>
     </p>
   </div>
 </div>

@@ -17,47 +17,24 @@
 <form id="data" class="datagather" action="." onsubmit="vp.generateFromForm(); return false;" method="post">
   <div class="controls">
     <label for="csv">Screen resolutions</label>
-      <textarea name="csv" id="csv" rows="10" cols="20">
-320x568
-768x1024
-320x480
-360x592
-360x640
-384x592
-1280x752
-320x534
-540x960
-720x1280
-1280x800
-1920x1080
-2560x1440
-320x533
-343x571
-364x606
-480x800
-598x360
-600x912
-1080x1920
-1366x2304
-1600x900
-314x220
-384x604
-600x917
-601x906
-720x1184
-768x1184
-800x438
-    </textarea>
+      <textarea name="csv" id="csv" rows="10" cols="20"></textarea>
+    <div class="help">
+      e.g.<br>
+      1440x900<br>
+      1920x1080<br>
+      1280x1024<br>
+      360x640<br>
+      <a href="https://productforums.google.com/forum/#!topic/analytics/XV12Tibl0U8" target="_new">Getting these values from analytics</a>
+    </div>
   </div>
   <div class="controls">
-    <label for="url">Site URL</label><input type="text" name="url" id="url" value="alongdomainnamegoeshere.com">
-    <label for="colour">Colour (hex)</label><input type="text" name="colour" id="colour" value="#8888cc">
-    <label for="bgcolour">Background colour (hex)</label><input type="text" name="bgcolour" id="bgcolour" value="#ffffff">
+    <label for="url">Site URL</label><input type="text" name="url" id="url" placeholder="yoursite.com">
+    <label for="colour">Colour (hex)</label><input type="text" name="colour" id="colour" placeholder="#8888cc">
+    <label for="bgcolour">Background colour (hex)</label><input type="text" name="bgcolour" id="bgcolour" placeholder="#ffffff">
     <input type="submit" class="button submit" name="submit" value="Make my viewport visualisation">
   </div>
 </form>
 </div>
-
  <div class="canvasContainer">
    <canvas id="canvas" width="200" height="100"></canvas>
  </div>

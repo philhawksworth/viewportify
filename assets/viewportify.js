@@ -7,7 +7,7 @@ var vp = {
 
   // full page view grabbing data from the object in the page
   generateFromDataInPage : function () {
-    var data = vp.scale(pageData, 0.5);
+    var data = vp.scale(pageData, 1500);
     vp.constructGraph(data, false);
   },
 
@@ -15,7 +15,7 @@ var vp = {
   // preview graph grabbing data from the form
   generateFromForm : function () {
     vp.data = vp.makeData();
-    var data = vp.scale(vp.data, 0.1);
+    var data = vp.scale(vp.data, 300);
     vp.constructGraph(data, true);
     var savestep = document.querySelectorAll(".savestep");
     if(savestep.length) {
@@ -164,18 +164,21 @@ var vp = {
 
 
   // scale to the data values for a smaller thumbnail to be generated
-  scale : function(data, scale) {
+  scale : function(data, maxheight) {
+    
     var scaledData = vp.clone(data);
 
-    // calc ratio to give height of 160
-    // var r = data.height / 160;
+    // calc ratio to give a max height
+    var r = data.height / maxheight;
 
-    var ratio = scale;
-    scaledData.height = parseInt(data.height * ratio, 10);
-    scaledData.width = parseInt(data.width * ratio, 10);
+    scaledData.height = parseInt(data.height / r, 10);
+    scaledData.width = parseInt(data.width / r, 10);
+    if(scaledData.width < 400){
+      scaledData.width = 400;
+    }
     for (var i = scaledData.viewports.length - 1; i >= 0; i--) {
-      scaledData.viewports[i].h = parseInt(data.viewports[i].h * ratio, 10);
-      scaledData.viewports[i].w = parseInt(data.viewports[i].w * ratio, 10);
+      scaledData.viewports[i].h = parseInt(data.viewports[i].h / r, 10);
+      scaledData.viewports[i].w = parseInt(data.viewports[i].w / r, 10);
     }
     // console.log(r);
     // var maxwidth = vp.data.width / r;
