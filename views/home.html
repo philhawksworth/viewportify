@@ -29,7 +29,7 @@
   <a href="/graph/{{ graph.id }}">
     <img src="https://s3.amazonaws.com/{{ bucket }}/{{ graph.id }}.png" alt="" />
   </a>
-  <span>{{ graph.url }}</span>
+  <span>{% if graph.url %}{{ graph.url }}{% else %}&nbsp;{% endif %}</span>
   </div>
   {% endfor %}
 </div>
