@@ -28,58 +28,64 @@ var vp = {
   // gather data from the form and stash it in an object
   makeData : function () {
 
-     var data = {
-       colour : null,
-       bgcolour : null,
-       height : 0,
-       width : 0,
-       viewports : [],
-       name : null
-     };
+    var data = {
+      colour : null,
+      bgcolour : null,
+      height : 0,
+      width : 0,
+      viewports : [],
+      name : null
+    };
 
-     data.colour = vp.hexToRgb(document.querySelector('#colour').value);
-     data.bgcolour = document.querySelector('#bgcolour').value;
-     data.name = document.getElementById('url').value;
+    //enforce some defaults of no colours were given
+    var colour = document.querySelector('#colour').value;
+    var bgcolour = document.querySelector('#bgcolour').value;
+    colour = colour ? colour : '#000000';
+    bgcolour = bgcolour ? bgcolour : '#ffffff';
 
-     var lines = document.querySelector('#csv').value.trim().split('\n');
-     data.viewports = [];
-     for (var i = 0; i < lines.length; i++) {
+    // set the values in the data object
+    data.colour = vp.hexToRgb(colour);
+    data.bgcolour = bgcolour;
+    data.name = document.getElementById('url').value;
 
-       // populate the viewports objects array
-       var dimensions = lines[i].split('x');
-       data.viewports.push({
-         w : dimensions[0],
-         h : dimensions[1],
-       });
+    // parse the viewports data
+    var lines = document.querySelector('#csv').value.trim().split('\n');
+    data.viewports = [];
+    for (var i = 0; i < lines.length; i++) {
 
-       // determine the canvas size needed
-       var x = parseInt(dimensions[0], 10);
-       var y = parseInt(dimensions[1], 10);
-       if(x > data.width) {
-          data.width = x;
-       }
-       if(y > data.height) {
-          data.height = y;
-       }
-     }
+      // populate the viewports objects array
+      var dimensions = lines[i].split('x');
+      data.viewports.push({
+        w : dimensions[0],
+        h : dimensions[1],
+      });
 
-     // add padding to the canvas
-     data.width += (2 * vp.padding);
-     data.height += (2 * vp.padding);
+      // determine the canvas size needed
+      var x = parseInt(dimensions[0], 10);
+      var y = parseInt(dimensions[1], 10);
+      if(x > data.width) {
+        data.width = x;
+      }
+      if(y > data.height) {
+        data.height = y;
+      }
+    }
 
-     return data;
- },
+    // add padding to the canvas
+    data.width += (2 * vp.padding);
+    data.height += (2 * vp.padding);
+
+    return data;
+  },
 
 
+  // step throught the provided data and build a canvas render of the graph
   constructGraph : function (data, thumbnail) {
 
     // Create the canvas at the right size for the content
     var c = document.querySelector("#canvas");
     c.width = data.width;
     c.height = data.height;
-
-
-    console.log("big width: ", c.width);
 
     vp.canvas = oCanvas.create({
       canvas: "#canvas",
@@ -90,7 +96,6 @@ var vp = {
     vp.generateViewports(data , thumbnail);
 
     // don't add the text label to the thumbnail
-    console.log("thumbnail? ", thumbnail);
     if(!thumbnail){
       vp.addText(data.name, data.colour, data.bgcolour);
     }
@@ -160,7 +165,6 @@ var vp = {
 
 
   setPayload : function () {
-    console.log("Payload", vp.data );
     document.querySelector('#graphData').value = JSON.stringify(vp.data);
     document.querySelector('#thumbnail').value = vp.imgsrc;
     return true;
@@ -173,7 +177,7 @@ var vp = {
     var scaledData = vp.clone(data);
 
     // calc ratio to give a max height
-    var r = data.height / maxheight;  
+    var r = data.height / maxheight;
 
     scaledData.height = parseInt(data.height / r, 10);
     scaledData.width = parseInt(data.width / r, 10);
@@ -185,9 +189,6 @@ var vp = {
       scaledData.viewports[i].h = parseInt(data.viewports[i].h / r, 10);
       scaledData.viewports[i].w = parseInt(data.viewports[i].w / r, 10);
     }
-    // console.log(r);
-    // var maxwidth = vp.data.width / r;
-    // console.log(maxwidth);
     return scaledData;
   },
 
