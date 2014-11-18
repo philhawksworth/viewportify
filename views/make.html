@@ -1,11 +1,23 @@
 {% extends 'base.html' %}
 
+{% block meta %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@philhawksworth">
+<meta name="twitter:title" content="Browser sizes used to view viewportify.hawksworx.com">
+<meta name="twitter:description" content="The web is viewed in all shapes and sizes. This graphic shows the most common viewport sizes used on viewportify.hawksworx.com. Generate your own from your analytics data!">
+<meta name="twitter:image:src" content="https://s3.amazonaws.com/graphs.viewports.hawksworx.com/viewportify.png">
+<meta name="twitter:url" content="http://viewportify.hawksworx.com/graph/5erPoC" />
+{% endblock %}
+
 
 {% block header %}
 <div class="header">
   <div class="container">
     <h1><a href="/" >viewportify</a></h1>
     <p class="strapline">The web is viewed in all shapes and sizes.</p>
+    <p>
+      <a href="/" >Gallery</a> | <a href="https://twitter.com/intent/tweet?text=A%20graph%20of%20the%20browser%20viewports%20used%20to%20access%20my%20site%3A%20&url=http%3A%2F%2Fviewportify.hawksworx.com%2Fgraph%2F{{ graph.id }}&hashtags=RWD">Tweet this</a>
+    </p>
   </div>
 </div>
 {% endblock %}
