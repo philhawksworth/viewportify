@@ -27,6 +27,20 @@
 
 <div class="dark">
 <form id="data" class="datagather" action="." onsubmit="vp.generateFromForm(); return false;" method="post">
+  <div class="oauth">
+    <a href="#">Oauth with Google to get analytics data</a>
+  </div>
+  <div class="google">
+    <label for="account">Accounts:</label>
+    <select name="accounts" id="accounts">
+    </select>
+    <label for="properties">Properties:</label>
+    <select name="properties" id="properties">
+    </select>
+    <label for="profiles">Profiles:</label>
+    <select name="profiles" id="profiles">
+    </select>
+  </div>
   <div class="controls">
     <label for="csv">Screen resolutions</label>
       <textarea name="csv" id="csv" rows="10" cols="20"></textarea>
@@ -66,6 +80,17 @@
 {% endblock %}
 
 {% block scripts %}
+<script>
+  var googleAuth = {
+    response_type: 'token',
+    client_id: '683997198734-65gg03eevf9atvmfstnbu1bmuv7k7l5a.apps.googleusercontent.com',
+    redirect_uri: window.location.href.split('#')[0],
+    scope: 'https://www.googleapis.com/auth/analytics.readonly',
+    state: '',
+    approval_prompt: 'auto'
+  };
+</script>
 <script src="/assets/ocanvas-2.7.3.min.js" charset="utf-8"></script>
 <script src="/assets/viewportify.js" charset="utf-8"></script>
+<script src="/assets/user.js" charset="utf-8"></script>
 {% endblock %}
