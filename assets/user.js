@@ -135,7 +135,7 @@
       return html.join('');
     },
     displayAccounts: function(data){
-      user.oAuthButton.style.display = 'none';
+      user.oAuthCTA.style.display = 'none';
       user.properties.innerHTML = '';
       user.profiles.innerHTML = '';
 
@@ -172,6 +172,7 @@
             + "sort=-ga:visitors";
 
         user.apiRequest(endpoint, user.parseResolutions);
+        document.querySelector('#url').value = user.profiles.options[user.profiles.selectedIndex].text;
       });
     },
     parseResolutions: function(data){
@@ -200,12 +201,14 @@
 
     init: function(){
       user.oAuthButton = document.querySelector('.oauth a');
+      user.oAuthCTA = document.querySelector('.oauth');
       user.accounts = document.querySelector('#accounts');
       user.properties = document.querySelector('#properties');
       user.profiles = document.querySelector('#profiles');
-
+      user.oAuthOptions = document.querySelector('.google');
       user.oAuthButton.addEventListener('click', function(e){
         e.preventDefault();
+        user.oAuthOptions.style.display('block');
         user.getAccounts(user.displayAccounts);
       }, false);
       if(window.location.hash.indexOf('token') > -1){

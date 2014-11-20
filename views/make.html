@@ -28,29 +28,27 @@
 <div class="dark">
 <form id="data" class="datagather" action="." onsubmit="vp.generateFromForm(); return false;" method="post">
   <div class="oauth">
-    <a href="#">Connect with Google via oAuth to get analytics data</a> or set the values manually below.
+    <a href="#" class="button oauth-btn">Get data from Google Analytics</a> or set the values manually below.
   </div>
   <div class="google">
-    <label for="account">Accounts:</label>
-    <select name="accounts" id="accounts">
-    </select>
-    <label for="properties">Properties:</label>
-    <select name="properties" id="properties">
-    </select>
-    <label for="profiles">Profiles:</label>
-    <select name="profiles" id="profiles">
-    </select>
+    <label for="account">Accounts</label>
+    <select name="accounts" id="accounts"></select>
+    <label for="properties">Properties</label>
+    <select name="properties" id="properties"></select>
+    <label for="profiles">Profiles</label>
+    <select name="profiles" id="profiles"></select>
   </div>
+  
   <div class="controls">
     <label for="csv">Screen resolutions</label>
-      <textarea name="csv" id="csv" rows="10" cols="20"></textarea>
+    <textarea name="csv" id="csv" rows="10" cols="20"></textarea>
     <div class="help">
       e.g.<br>
       1440x900<br>
       1920x1080<br>
       1280x1024<br>
       360x640<br>
-      <a href="https://productforums.google.com/forum/#!topic/analytics/XV12Tibl0U8" target="_new">Getting these values from analytics</a>
+      <a href="https://productforums.google.com/forum/#!topic/analytics/XV12Tibl0U8" target="_new">Getting these values manually from analytics</a>
     </div>
   </div>
   <div class="controls">

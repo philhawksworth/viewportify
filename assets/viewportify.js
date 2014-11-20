@@ -38,8 +38,8 @@ var vp = {
     };
 
     //enforce some defaults of no colours were given
-    var colour = document.querySelector('#colour').value;
-    var bgcolour = document.querySelector('#bgcolour').value;
+    var colour =  document.querySelector('#colour').value ? document.querySelector('#colour').value : '#000000';
+    var bgcolour = document.querySelector('#bgcolour').value ? document.querySelector('#bgcolour').value : '#ffffff';
     colour = colour ? colour : '#000000';
     bgcolour = bgcolour ? bgcolour : '#ffffff';
 
