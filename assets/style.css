@@ -195,6 +195,9 @@ input[type='text'] {
 textarea {
   margin-bottom: 0;
 }
+select {
+  margin-bottom:1em;
+}
 label,
 .help {
   display: block;

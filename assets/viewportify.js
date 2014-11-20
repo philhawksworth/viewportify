@@ -21,6 +21,7 @@ var vp = {
     if(savestep.length) {
       savestep[0].style.display = "block";
       savestep[1].style.display = "block";
+      document.location.href="#output";
     }
   },
 

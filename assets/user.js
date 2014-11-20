@@ -77,6 +77,9 @@
       return params;
     },
     getAccounts: function(callback){
+
+      user.oAuthOptions.style.display = 'block';
+
       var endpoint = 'https://www.googleapis.com/analytics/v3/management/accounts';
       user.apiRequest(endpoint, function(data){ callback(user.parseResponse(data)); });
     },
@@ -208,7 +211,6 @@
       user.oAuthOptions = document.querySelector('.google');
       user.oAuthButton.addEventListener('click', function(e){
         e.preventDefault();
-        user.oAuthOptions.style.display('block');
         user.getAccounts(user.displayAccounts);
       }, false);
       if(window.location.hash.indexOf('token') > -1){
