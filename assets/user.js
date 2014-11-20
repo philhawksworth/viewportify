@@ -153,6 +153,7 @@
       user.properties.innerHTML = user.fillSelect(user.properties, data);
       user.properties.addEventListener('change', function(){
         user.getProfiles(user.accounts.value, user.properties.value, user.displayProfiles);
+        document.querySelector('#url').value = user.properties.options[user.properties.selectedIndex].text;
       });
     },
     displayProfiles: function(data){
@@ -175,7 +176,7 @@
             + "sort=-ga:visitors";
 
         user.apiRequest(endpoint, user.parseResolutions);
-        document.querySelector('#url').value = user.profiles.options[user.profiles.selectedIndex].text;
+
       });
     },
     parseResolutions: function(data){
