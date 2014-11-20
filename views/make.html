@@ -27,16 +27,28 @@
 
 <div class="dark">
 <form id="data" class="datagather" action="." onsubmit="vp.generateFromForm(); return false;" method="post">
+  <div class="oauth">
+    <a href="#" class="button oauth-btn">Get data from Google Analytics</a> or set the values manually below.
+  </div>
+  <div class="google">
+    <label for="account">Accounts</label>
+    <select name="accounts" id="accounts"></select>
+    <label for="properties">Properties</label>
+    <select name="properties" id="properties"></select>
+    <label for="profiles">Profiles</label>
+    <select name="profiles" id="profiles"></select>
+  </div>
+  
   <div class="controls">
     <label for="csv">Screen resolutions</label>
-      <textarea name="csv" id="csv" rows="10" cols="20"></textarea>
+    <textarea name="csv" id="csv" rows="10" cols="20"></textarea>
     <div class="help">
       e.g.<br>
       1440x900<br>
       1920x1080<br>
       1280x1024<br>
       360x640<br>
-      <a href="https://productforums.google.com/forum/#!topic/analytics/XV12Tibl0U8" target="_new">Getting these values from analytics</a>
+      <a href="https://productforums.google.com/forum/#!topic/analytics/XV12Tibl0U8" target="_new">Getting these values manually from analytics</a>
     </div>
   </div>
   <div class="controls">
@@ -59,6 +71,7 @@
      <input type="hidden" name="data" id="graphData" value="">
      <input type="hidden" name="thumbnail" id="thumbnail" value="">
      <input type="submit" name="submit" class="button" value="I like it! Add this image to the gallery and give me a page with a BIG version">
+     <p class="help">or tinker with the settings above to create a more pleasing graph before saving it.</p>
    </form>
  </div>
 
@@ -66,6 +79,17 @@
 {% endblock %}
 
 {% block scripts %}
+<script>
+  var googleAuth = {
+    response_type: 'token',
+    client_id: '685894574351-iuik242jshirh08grs8v2beqc9e8j51k.apps.googleusercontent.com',
+    redirect_uri: window.location.href.split('#')[0],
+    scope: 'https://www.googleapis.com/auth/analytics.readonly',
+    state: '',
+    approval_prompt: 'auto'
+  };
+</script>
 <script src="/assets/ocanvas-2.7.3.min.js" charset="utf-8"></script>
 <script src="/assets/viewportify.js" charset="utf-8"></script>
+<script src="/assets/user.js" charset="utf-8"></script>
 {% endblock %}
