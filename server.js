@@ -47,7 +47,7 @@ server.route({
   path: "/",
   method: "GET",
   handler: function(request, response) {
-    Graph.find(function (err, graphs) {
+    Graph.find().sort('-_id').exec(function (err, graphs) {
       if (err) return console.error(err);
       response.view("home", { graphs : graphs, bucket : bucket});
     });
