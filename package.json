@@ -13,7 +13,7 @@
     "swig": "~1.4.2",
     "aws-sdk": "~2.0.18",
     "mongodb": "~1.4.19",
-    "mongoose": "~3.8.18",
+    "mongoose": "~5.7.8",
     "short-mongo-id": "~0.1.1"
   }
 }
